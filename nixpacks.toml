@@ -1,0 +1,21 @@
+# Nixpacks configuration for Railway - Go Backend
+# Backend files are at root level
+
+[variables]
+GO_VERSION = "1.21"
+
+[phases.setup]
+nixPkgs = { go = "1.21" }
+
+[phases.install]
+cmds = [
+  "go mod download && go mod tidy"
+]
+
+[phases.build]
+cmds = [
+  "go build -o backend main.go"
+]
+
+[start]
+cmd = "./backend"
