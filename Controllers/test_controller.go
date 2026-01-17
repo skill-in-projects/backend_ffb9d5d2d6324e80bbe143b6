@@ -26,10 +26,17 @@ func (tc *TestController) setSearchPath() error {
 }
 
 func (tc *TestController) GetAll(w http.ResponseWriter, r *http.Request) {
+    // This will cause a runtime panic (nil pointer dereference)
+    var nilSlice []int
+    _ = nilSlice[0]  // Panic: runtime error: index out of range
+    
     if err := tc.setSearchPath(); err != nil {
         http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
         return
     }
+    
+    // ... rest of the code
+
     
     rows, err := tc.DB.Query(`SELECT "Id", "Name" FROM "TestProjects" ORDER BY "Id"`)
     if err != nil {
